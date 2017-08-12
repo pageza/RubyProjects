@@ -1,0 +1,31 @@
+<div>
+  <h1><%= @user.name %></h1>
+</div>
+<div>
+  <form action = "/ideas" method = "post">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="text" id="Content" name = "idea[content]" value="Post something witty here....">
+    <input type="submit" value = "Idea!">
+  </form>
+</div>
+
+
+
+
+<% @ideas.each do |idea| %>
+  <label> <a href="/users/<%= idea.user.id%>"> <%= idea.user.name %></a> says</label>
+	<h1><%= idea.content %></h1>
+  <form action = "/likes" method = "post">
+		    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+		    <input type="hidden" name="like[idea_id]" value = "<%= idea.id %>">
+			<input type="submit" name="Like" value = "Like">
+		</form>
+	<h3><a href="/ideas/<%= idea.id %>"><%= idea.likes.count %></a>   people like this.</h3>
+  <% if idea.user == current_user %>
+		<form action = "/ideas/<%= idea.id %>" method = "post">
+		    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+			<input type="hidden" name="_method" value="delete">
+			<input type = 'submit' value = "Delete Secret">
+		</form>
+	<% end %>
+<% end %>

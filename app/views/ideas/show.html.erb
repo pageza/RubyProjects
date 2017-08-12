@@ -1,0 +1,21 @@
+<div>
+  <p><%=@idea.user.name%> says:</p>
+  <p><%= @idea.content%></p>
+</div>
+
+<div>
+  <h4>People who liked this post</h4>
+  <table>
+    <tr>
+      <th>Alias</th>
+      <th>Name</th>
+    </tr>
+    <%@likes.distinct.each do |like| %>
+    <tr>
+      <td><%= like.user.alias %></td>
+      <td><%= like.user.name %></td>
+    </tr>
+    <%end%>
+
+  </table>
+</div>
